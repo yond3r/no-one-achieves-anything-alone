@@ -1,5 +1,5 @@
 const mysql = require('mysql2')
-const express = require('express');
+// const express = require('express');
 const inquirer = require('inquirer');
 
 const db = mysql.createConnection(
@@ -14,7 +14,7 @@ const db = mysql.createConnection(
 );
 
 //connections between sql server & sql database
-connection.connect(function (err) {
+db.connect(function (err) {
     if (err) throw err;
     options();
 });
@@ -52,6 +52,9 @@ function options() {
                 case 'Add a role':
                     addRole();
                     break;
+                case 'Add a department':
+                    addDepartments();
+                    break;
                 case 'Update employee role':
                     updateRole();
                     break;
@@ -70,9 +73,9 @@ function options() {
 //view all employees within this database!
 function viewEmployees() {
     let query = 'SELECT * FROM employees';
-    connection.query(query, function (err, res) {
+    db.query(query, function (err, res) {
         if (err) throw err;
-        console.log(res.length + 'here are all the employees!!');
+        console.log(res.length + ' is the number of all the employees!!');
         console.table('All Employees', res)
         options();
     })
@@ -81,7 +84,7 @@ function viewEmployees() {
 //view all departments within this database!
 function viewDepartments() {
     let query = 'SELECT * FROM departments';
-    connection.query(query, function (err, res) {
+    db.query(query, function (err, res) {
         if (err) throw err;
         console.table('All Departments', res);
         options();
@@ -90,7 +93,7 @@ function viewDepartments() {
 
 function viewRoles() {
     let query = 'SELECT * FROM roles';
-    connection.query(query, function (err, res) {
+    db.query(query, function (err, res) {
         if (err) throw err;
         console.table('All Roles', res);
         options();
@@ -99,7 +102,7 @@ function viewRoles() {
 
 function addEmployee() {
     let query = 'SELECT * FROM roles';
-    connection.query(query, function (err, res) {
+    db.query(query, function (err, res) {
         if (err) throw err;
         inquirer.prompt([
             {
@@ -134,17 +137,17 @@ function addEmployee() {
             for (let a = 0; a < res.lenth; a++) {
                 if (res[a].title == answer.role) {
                     roles_id = res[a].id;
-                    console.log(role_id)
+                    console.log(roles_id)
                 }
                 return rolesArray;
             }
-            connection.query(
+            db.query(
                 'INSERT INTO employee SET ?',
                 {
                     first_name: answer.first_name,
                     last_name: answer.last_name,
                     manager_id: answer.manager_id,
-                    role_id: role_id,
+                    role_id: roles_id,
                 },
                 function (err) {
                     if (err) throw err;
@@ -158,13 +161,91 @@ function addEmployee() {
 function addDepartments(){
     inquirer.prompt ([
         {
-            name: 'newDepartments'
-
-
-
+            name: 'newDepartments',
+            type: 'input',
+            message: 'Of which department would you like to add?'
         }
-    ])
-}
+    ]).then(function(answer){
+        db.query(
+            'INSERT INTO departments SET ?',
+            {
+                name: answer.newDepartments
+            });
+            let query = 'SELECT * FROM departments';
+                db.query(query, function(err, res){
+                if (err) throw err;
+                console.log('Yee-haw! Your department has been added!! Way to go!!');
+                console.table('All Departments:', res);
+                options();
+            })
+        })
+    };
+
+    function addRole(){
+        db.query('SELECT * FROM departments', function(err, res){
+            if (err) throw err;
+
+            inquirer.prompt([
+                {
+                    name: 'new_role',
+                    type: 'input',
+                    name: 'What new role would you like to add to this valued employee?'
+                },
+                {
+                    name: 'funds',
+                    type: 'input',
+                    message: 'Please enter the salary of the intended employee. (Please enter a numeric value.)'
+                },
+                {
+                    name: 'departments',
+                    type: 'list',
+                    choices: function(){
+                        let departmentsArray =[];
+                        for (let i= 0; i < res.length; i++){
+                            departmentsArray.push(res[i].name);
+                        }
+                        return departmentsArray;
+                    }
+                }
+            ]).then(function (answer){
+                let department_id;
+                for (let a = 0; a < res.length; a++){
+                    if (res[a].name == answer.Departments){
+                        department_id = res[a].id;
+                    }
+                }
+            db.query(
+                'INSERT INTO role SET ?',{
+                    title: answer.new_role,
+                    salary: answer.salary,
+                    department_id: department_id
+                },
+                function (err, res){
+                    if (err) throw err;
+                    console.log('Yeah!! Your new role has been added! Get excited!!(-:')
+                    console.table('All Roles:', res);
+                    options();
+                })
+            })
+        })
+    };
+
+    //update a role within this database
+    function updateRole(){
+
+    };
+
+    //delete an employee
+    function deleteEmployee(){
+
+    };
+
+    //exit this database! Bye-bye!
+    function exitDatabase(){
+        db.end();
+    };
+
+
 
 
 
