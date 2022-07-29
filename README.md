@@ -14,6 +14,9 @@
  - ![alt text](./img/schScreens.png)
  - ![alt text](./img/seedsScreens.png)
  - ![alt text](./img/indexScreens.png)
+
+ ## Video
+ Video to go here
  
  ## Description 
  - The purpose of this application is to allow each user to: add the applicable department, roles, names, and salaries. The application also allows the user to update and delete each employee, as needed. 
