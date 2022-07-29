@@ -13,11 +13,19 @@ CREATE TABLE departments (
 -- TABLE CREATION FOR ROLES --
 CREATE TABLE roles (
     id INT NOT NULL AUTO_INCREMENT,
-
+    title VARCHAR(35) NOT NULL,
+    salary DECIMAL NOT NULL,
+    department_id INT NOT NULL,
+    PRIMARY KEY (id)
+);
+-- TABLE CREATION FOR EMPLOYEES --
+CREATE TABLE employees (
+    id INT NOT NULL AUTO_INCREMENT,
+    first_name VARCHAR(35) NOT NULL,
+    last_name VARCHAR(35) NOT NULL,
+    role_id INT NOT NULL,
+    manager_id INT NULL,
+    PRIMARY KEY (id)
 )
-
-
-
-
 
 SOURCE seeds.sql;
