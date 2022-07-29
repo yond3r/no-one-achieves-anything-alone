@@ -19,7 +19,7 @@ CREATE TABLE roles (
     PRIMARY KEY (id)
 );
 -- TABLE CREATION FOR EMPLOYEES --
-CREATE TABLE employee (
+CREATE TABLE employees (
     id INT NOT NULL AUTO_INCREMENT,
     first_name VARCHAR(135) NOT NULL,
     last_name VARCHAR(135) NOT NULL,

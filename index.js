@@ -121,7 +121,7 @@ function addEmployee() {
                 message: "Please enter the employee's Identification Number here."
             },
             {
-                name: 'role',
+                name: 'role_id',
                 type: 'list',
                 choices: function () {
                     var rolesArray = [];
@@ -142,13 +142,13 @@ function addEmployee() {
                 return rolesArray;
             }
             db.query(
-                'INSERT INTO employee SET ?',
-                {
-                    first_name: answer.first_name,
-                    last_name: answer.last_name,
-                    manager_id: answer.manager_id,
-                    role_id: roles_id,
-                },
+                'INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)',
+                [
+                    answer.first_name,
+                    answer.last_name,
+                    answer.role_id,
+                    answer.manager_id
+                ],
                 function (err) {
                     if (err) throw err;
                     console.log('Woo-hoo!! This employee was added!! Go you!! (-:');
@@ -215,11 +215,12 @@ function addDepartments(){
                     }
                 }
             db.query(
-                'INSERT INTO role SET ?',{
-                    title: answer.new_role,
-                    salary: answer.salary,
-                    department_id: department_id
-                },
+                'INSERT INTO role (new_role, salary, department_id) VALUES (?,?,?)',
+                [
+                    answer.new_role,
+                    answer.salary,
+                    answer.department_id
+                ],
                 function (err, res){
                     if (err) throw err;
                     console.log('Yeah!! Your new role has been added! Get excited!!(-:')
@@ -232,12 +233,12 @@ function addDepartments(){
 
     //update a role within this database
     function updateRole(){
-
+//will update @ later time
     };
 
     //delete an employee
     function deleteEmployee(){
-
+//will update @ later time
     };
 
     //exit this database! Bye-bye!
