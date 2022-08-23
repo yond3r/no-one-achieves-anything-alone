@@ -2,6 +2,7 @@ const mysql = require('mysql2')
 // const express = require('express');
 const inquirer = require('inquirer');
 
+
 const db = mysql.createConnection(
     {
         host: 'localhost',
@@ -29,6 +30,7 @@ function options() {
             choices: [
                 'View All Employees',
                 'View All Departments',
+                'View All Roles',
                 'Add an employee',
                 'Add a role',
                 'Update employee role',
@@ -50,13 +52,13 @@ function options() {
                     addEmployee();
                     break;
                 case 'Add a role':
-                    addRole();
+                    addRoles();
                     break;
                 case 'Add a department':
                     addDepartments();
                     break;
                 case 'Update employee role':
-                    updateRole();
+                    updateRoles();
                     break;
                 case 'Delete an employee':
                     deleteEmployee();
@@ -72,33 +74,30 @@ function options() {
 
 //view all employees within this database!
 function viewEmployees() {
-    let query = 'SELECT * FROM employees';
-    db.query(query, function (err, res) {
-        if (err) throw err;
-        console.log(res.length + ' is the number of all the employees!!');
-        console.table('All Employees', res)
+    let query = 'SELECT * FROM employees'
+        db.query(query, function (err, res){
+            if (err) throw err;
+                console.table(res)
         options();
-    })
-};
+})};
+
 
 //view all departments within this database!
 function viewDepartments() {
     let query = 'SELECT * FROM departments';
     db.query(query, function (err, res) {
         if (err) throw err;
-        console.table('All Departments', res);
+            console.table(res);
         options();
-    })
-};
+    })};
 
 function viewRoles() {
     let query = 'SELECT * FROM roles';
     db.query(query, function (err, res) {
         if (err) throw err;
-        console.table('All Roles', res);
+            console.table(res);
         options();
-    })
-};
+    })};
 
 function addEmployee() {
     let query = 'SELECT * FROM roles';
@@ -121,7 +120,7 @@ function addEmployee() {
                 message: "Please enter the employee's Identification Number here."
             },
             {
-                name: 'role_id',
+                name: 'roles_id',
                 type: 'list',
                 choices: function () {
                     var rolesArray = [];
@@ -135,18 +134,18 @@ function addEmployee() {
         ]).then(function (answer) {
             let roles_id;
             for (let a = 0; a < res.lenth; a++) {
-                if (res[a].title == answer.role) {
+                if (res[a].title == answer.roles) {
                     roles_id = res[a].id;
                     console.log(roles_id)
                 }
                 return rolesArray;
             }
             db.query(
-                'INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)',
+                'INSERT INTO employees (first_name, last_name, roles_id, manager_id) VALUES (?,?,?,?)',
                 [
                     answer.first_name,
                     answer.last_name,
-                    answer.role_id,
+                    answer.roles_id,
                     answer.manager_id
                 ],
                 function (err) {
@@ -181,13 +180,13 @@ function addDepartments(){
         })
     };
 
-    function addRole(){
+    function addRoles(){
         db.query('SELECT * FROM departments', function(err, res){
             if (err) throw err;
 
             inquirer.prompt([
                 {
-                    name: 'new_role',
+                    name: 'new_roles',
                     type: 'input',
                     name: 'What new role would you like to add to this valued employee?'
                 },
@@ -215,9 +214,9 @@ function addDepartments(){
                     }
                 }
             db.query(
-                'INSERT INTO role (new_role, salary, department_id) VALUES (?,?,?)',
+                'INSERT INTO roles (new_roles, salary, department_id) VALUES (?,?,?)',
                 [
-                    answer.new_role,
+                    answer.new_roles,
                     answer.salary,
                     answer.department_id
                 ],
@@ -232,32 +231,34 @@ function addDepartments(){
     };
 
     //update a role within this database
-    function updateRole(){
-//will update @ later time
-    };
-
+    function updateRoles(){
+    inquirer.prompt ([
+    {
+        name: 'employeeUpdate',
+        type: 'input',
+        message: 'Which of these wonderful employees would you like to update?'
+    },
+    {
+        name: 'updateRoles',
+        type: 'input',
+        message: '& What role would you like to update this employee to?'
+    }
+    ]).then(function(answer){
+        db.query('UPDATE employee SET roles_id=? WHERE first_name=?', [answer.updateRoles, answer.employeeUpdate], function(err, res){
+            if (err) throw (err);
+                console.table(res);
+                    options();
+        })
+    })};
+    
     //delete an employee
     function deleteEmployee(){
 //will update @ later time
     };
 
+
+
     //exit this database! Bye-bye!
     function exitDatabase(){
         db.end();
     };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

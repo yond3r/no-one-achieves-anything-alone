@@ -23,9 +23,7 @@ CREATE TABLE employees (
     id INT NOT NULL AUTO_INCREMENT,
     first_name VARCHAR(135) NOT NULL,
     last_name VARCHAR(135) NOT NULL,
-    role_id INT NOT NULL,
+    roles_id INT NOT NULL,
     manager_id INT NULL,
     PRIMARY KEY (id)
 );
-
--- SOURCE seeds.sql; -- can't quite figure out how to route from the db folder without a '/' in the mix, throwing off the source material.

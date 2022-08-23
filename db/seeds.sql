@@ -21,7 +21,7 @@ VALUES
 ('Security Guard', 30000, 9),
 ('Public Relations of Health Department', 50000, 10);
 
-INSERT INTO employees (first_name, last_name, role_id, manager_id)
+INSERT INTO employees (first_name, last_name, roles_id, manager_id)
 VALUES
 ('Chris', 'Traeger', 1, 690),
 ('Ben', 'Wyatt', 2, 590),
