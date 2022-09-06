@@ -13,14 +13,14 @@
  ## Screenshots
  - ![alt text](./img/schScreens.png)
  - ![alt text](./img/seedsScreens.png)
- - ![alt text](./img/indexScreens.png)
+ - ![alt text](./img/Departments-Team.png)
 
  ## Video
-https://user-images.githubusercontent.com/106720762/181677250-fb388ce6-db02-4082-b03b-1ce111d5c4e6.mp4
+
 
  
  ## Video Link
-  - [The Drive Link w/ the SECOND Parks & Rec-inspired Team Generator](https://drive.google.com/file/d/1ekUFgL9LTTiI7FrCIYBpy5WC3pEraDMo/view?usp=sharing)
+  - [The Drive Link w/ the SECOND Parks & Rec-inspired Team Generator](https://drive.google.com/file/d/1adtB74MDHx5KXdodrL1DN8hsfke49OSD/view?usp=sharing)
  
  ## Description 
  - The purpose of this application is to allow each user to: add the applicable department, roles, names, and salaries. The application also allows the user to update and delete each employee, as needed. 
