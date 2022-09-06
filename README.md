@@ -1,6 +1,6 @@
 ## No One Achieves Anything Alone /// Team Tracker Generator!!!
     
- ##Table of Contents 
+ ## Table of Contents 
  1. [Screenshots](#screenshots)
  2. [Description](#description)
  3. [Usage](#usage)
@@ -16,6 +16,10 @@
  - ![alt text](./img/Departments-Team.png)
 
  ## Video
+
+
+
+https://user-images.githubusercontent.com/106720762/188680953-bf626884-460c-400b-99db-b4411ec2d15e.mp4
 
 
  
